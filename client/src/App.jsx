@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const data = await fetch(`http://localhost:5100/hello-app`);
+      const data = await fetch(`${import.meta.env.VITE_API_URL}/hello-app`);
       const response = await data.json();
       setHello(response.message);
     })();
