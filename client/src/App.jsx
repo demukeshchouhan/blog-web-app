@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [hello, setHello] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      const data = await fetch(`http://localhost:5100/hello-app`);
+      const response = await data.json();
+      setHello(response.message);
+    })();
+  }, []);
 
   return (
     <>
@@ -16,7 +25,18 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>
+        Vite + React +{" "}
+        <span
+          style={{
+            color: "#0070f3",
+            fontWeight: "bold",
+            textDecoration: "underline",
+          }}
+        >
+          {hello}
+        </span>
+      </h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
