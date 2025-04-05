@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  client:
+    build: ./client
+    working_dir: /usr/src/app
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 5173:5173
+    command: npm run dev
+  server:
+    build: ./server
+    working_dir: /usr/src/app
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 5100:5100
+    command: npm run dev
+  db:
+    image: postgres:16
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: mydb
+      POSTGRES_HOST: db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
